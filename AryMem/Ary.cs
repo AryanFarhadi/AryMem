@@ -303,7 +303,7 @@ namespace AryMemory
         /// <summary>
         /// Search for addresses by signature in target process memory
         /// </summary>
-        /// <param name="signature">string of target signature : "?? 12 A5 FF ??"</param>
+        /// <param name="signature">string of target signature : "?? 12 A8 FF ??"</param>
         /// <returns>List of found addresses</returns>
         public List<ulong> ScanAoB(string signature)
         {
