@@ -302,7 +302,7 @@ namespace AryMemory
         /// </summary>
         /// <param name="signature">string of target signature : "?? 12 A8 FF ??"</param>
         /// <returns>List of found addresses</returns>
-        public ulong[] ScanAoB(string signature)
+        public ulong[] ScanAoB(string signatures)
         {
             List<ulong> results = new List<ulong>();
 
