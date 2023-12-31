@@ -15,16 +15,11 @@
 	<Authors>AryanFarhadi</Authors>
 	<Description>A memory manipulation library to read and write memory in the simplest way</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\..\..\Need Files\Icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
