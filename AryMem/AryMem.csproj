@@ -4,6 +4,27 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/AryanFarhadi/AryMem</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>memory cheat trainer readmemory writememory read write arymem mem</PackageTags>
+    <NeutralLanguage>en-001</NeutralLanguage>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/AryanFarhadi/AryMem</PackageProjectUrl>
+	<PackageId>AryMem</PackageId>
+	<Authors>AryanFarhadi</Authors>
+	<Description>A memory manipulation library to read and write memory in the simplest way</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Need Files\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
