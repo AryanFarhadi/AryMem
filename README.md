@@ -1,6 +1,6 @@
-# AryMemory - Memory Manipulation Library
+# AryMem - Memory Manipulation Library
 
-AryMemory is a .NET library designed to simplify the process of reading and writing to process memory in Windows environments. It provides easy-to-use methods for interacting with the memory of other processes which can be utilized in developing game hacks, custom debuggers, or tools for software testing.
+AryMem is a .NET library designed to simplify the process of reading and writing to process memory in Windows environments. It provides easy-to-use methods for interacting with the memory of other processes which can be utilized in developing game hacks, custom debuggers, or tools for software testing.
 
 ## Features
 
