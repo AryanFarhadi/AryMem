@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace AryMem
@@ -334,6 +335,44 @@ namespace AryMem
             }
             return results.ToArray();
         }
+
+        /// <summary>
+        /// Freeze and Unfreeze process
+        /// </summary>
+        /// <param name="state"></param>
+        public void FrezzeProcess(bool state)
+        {
+            if (state)
+            {
+                foreach (ProcessThread pT in mProcess.Threads)
+                {
+                    IntPtr pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                    if (pOpenThread == IntPtr.Zero)
+                    {
+                        continue;
+                    }
+                    SuspendThread(pOpenThread);
+                    CloseHandle(pOpenThread);
+                }
+            }
+            else
+            {
+                foreach (ProcessThread pT in mProcess.Threads)
+                {
+                    IntPtr pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                    if (pOpenThread == IntPtr.Zero)
+                    {
+                        continue;
+                    }
+                    int suspendCount = 0;
+                    do
+                    {
+                        suspendCount = ResumeThread(pOpenThread);
+                    } while (suspendCount > 0);
+                    CloseHandle(pOpenThread);
+                }
+            }
+        }
         #endregion
         #region Pinvokes
         private const uint PROCESS_ALL_ACCESS = 0x1F0FFF;
@@ -366,12 +405,33 @@ namespace AryMem
             public uint Protect;
             public uint Type;
         }
+
+        [Flags]
+        public enum ThreadAccess : int
+        {
+            TERMINATE = (0x0001),
+            SUSPEND_RESUME = (0x0002),
+            GET_CONTEXT = (0x0008),
+            SET_CONTEXT = (0x0010),
+            SET_INFORMATION = (0x0020),
+            QUERY_INFORMATION = (0x0040),
+            SET_THREAD_TOKEN = (0x0080),
+            IMPERSONATE = (0x0100),
+            DIRECT_IMPERSONATION = (0x0200)
+        }
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr OpenThread(ThreadAccess dwDesiredAccess, bool bInheritHandle, uint dwThreadId);
+        [DllImport("kernel32.dll")]
+        static extern uint SuspendThread(IntPtr hThread);
+        [DllImport("kernel32.dll")]
+        static extern int ResumeThread(IntPtr hThread);
+        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern bool CloseHandle(IntPtr handle);
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool VirtualQueryEx(IntPtr hProcess, ulong lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
-
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
-
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool WriteProcessMemory(IntPtr hProcess, ulong lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);
         [DllImport("kernel32.dll", SetLastError = true)]
