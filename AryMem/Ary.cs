@@ -302,7 +302,7 @@ namespace AryMemory
         /// </summary>
         /// <param name="signature">string of target signature : "?? 12 A8 FF ??"</param>
         /// <returns>List of found addresses</returns>
-        public List<ulong> ScanAoB(string signature)
+        public ulong[] ScanAoB(string signature)
         {
             List<ulong> results = new List<ulong>();
 
@@ -332,7 +332,7 @@ namespace AryMemory
                 }
                 currentAddress = currentAddress + mbi.RegionSize;
             }
-            return results;
+            return results.ToArray();
         }
         #endregion
         #region Pinvokes
