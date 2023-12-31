@@ -340,7 +340,7 @@ namespace AryMemory
 
         public void Test()
         {
-
+            Console.WriteLine("Test");
         }
         #endregion
         #region Pinvokes
