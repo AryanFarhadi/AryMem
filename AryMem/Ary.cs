@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AryMemory
+namespace AryMem
 {
     public class Ary
     {
@@ -309,7 +309,7 @@ namespace AryMemory
             ulong currentAddress = 0;
             int bytesRead = 0;
 
-            byte[] signatureByteArray = ConvertStringToBytes(signature);
+            byte[] signatureByteArray = ConvertStringToBytes(signatures);
 
             while (VirtualQueryEx(mHandle, currentAddress, out MEMORY_BASIC_INFORMATION mbi, (uint)Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION))))
             {
