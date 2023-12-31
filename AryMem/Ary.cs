@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace AryMem
@@ -384,9 +383,47 @@ namespace AryMem
         /// </summary>
         /// <param name="simulate"></param>
         /// <param name="key"></param>
-        public void SimulateKey(KeyState simulate, Key key)
+        public void SimulateKeyboard(KeyEventFlag simulate, Key key)
         {
             PostMessage(mProcess.MainWindowHandle, (IntPtr)simulate, (IntPtr)key, IntPtr.Zero);
+        }
+        /// <summary>
+        /// Set cursor position by x and y
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SetMousePosition(int x, int y)
+        {
+            SetCursorPos(x, y);
+        }
+        /// <summary>
+        /// Set cursor position by mouse point
+        /// </summary>
+        /// <param name="point"></param>
+        public void SetMousePosition(MousePoint point)
+        {
+            SetCursorPos(point.X, point.Y);
+        }
+        /// <summary>
+        /// Get mouse position
+        /// </summary>
+        /// <returns>Mouse point</returns>
+        public MousePoint GetMousePosition()
+        {
+            MousePoint currentMousePoint;
+            var gotPoint = GetCursorPos(out currentMousePoint);
+            if (!gotPoint) { currentMousePoint = new MousePoint(0, 0); }
+            return currentMousePoint;
+        }
+        /// <summary>
+        /// Simulate mouse button clicks
+        /// </summary>
+        /// <param name="value"></param>
+        public void SimulateMouse(MouseEventFlags value)
+        {
+            MousePoint position = GetMousePosition();
+
+            mouse_event((int)value, position.X, position.Y, 0, 0);
         }
         #endregion
         #region Pinvokes
@@ -419,7 +456,7 @@ namespace AryMem
             public uint Protect;
             public uint Type;
         }
-        public enum KeyState
+        public enum KeyEventFlag
         {
             KEYDOWN = 0x100,
             KEYUP = 0x101
@@ -669,7 +706,43 @@ namespace AryMem
             IMPERSONATE = (0x0100),
             DIRECT_IMPERSONATION = (0x0200)
         }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MousePoint
+        {
+            public int X;
+            public int Y;
 
+            public MousePoint(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+
+            public override string ToString()
+            {
+                return $"<{X}, {Y}>";
+            }
+        }
+        [Flags]
+        public enum MouseEventFlags
+        {
+            LeftDown = 0x00000002,
+            LeftUp = 0x00000004,
+            MiddleDown = 0x00000020,
+            MiddleUp = 0x00000040,
+            Move = 0x00000001,
+            Absolute = 0x00008000,
+            RightDown = 0x00000008,
+            RightUp = 0x00000010
+        }
+        [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetCursorPos(int x, int y);
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetCursorPos(out MousePoint lpMousePoint);
+        [DllImport("user32.dll")]
+        static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
         [DllImport("user32.dll")]
         static extern bool PostMessage(IntPtr hWnd, IntPtr Msg, IntPtr wParam, IntPtr lParam);
         [DllImport("kernel32.dll")]
@@ -683,11 +756,11 @@ namespace AryMem
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool VirtualQueryEx(IntPtr hProcess, ulong lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
+        static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool WriteProcessMemory(IntPtr hProcess, ulong lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool ReadProcessMemory(IntPtr hProcess, ulong lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
+        static extern bool ReadProcessMemory(IntPtr hProcess, ulong lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
         #endregion
     }
 }
