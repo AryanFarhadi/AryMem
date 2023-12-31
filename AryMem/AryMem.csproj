@@ -4,6 +4,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+	<VersionPrefix>1.0.1</VersionPrefix>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/AryanFarhadi/AryMem</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -12,7 +13,7 @@
     <PackageIcon>Icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AryanFarhadi/AryMem</PackageProjectUrl>
 	<PackageId>AryMem</PackageId>
-	<Authors>AryanFarhadi</Authors>
+	<Authors>Aryan Farhadi</Authors>
 	<Description>A memory manipulation library to read and write memory in the simplest way</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
