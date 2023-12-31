@@ -158,7 +158,7 @@ namespace AryMemory
             return result;
         }
         /// <summary>
-        /// Write 00=null byte to process memory
+        /// Write 00 byte to process memory
         /// </summary>
         /// <param name="address"></param>
         /// <param name="sizeOfBytes"></param>
@@ -267,7 +267,7 @@ namespace AryMemory
         /// </summary>
         /// <param name="address"></param>
         /// <param name="length"></param>
-        /// <returns></returns>
+        /// <returns>Was instruction replaace succussful</returns>
         public bool Nop(ulong address, int length)
         {
             byte[] array = new byte[length];
