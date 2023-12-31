@@ -337,6 +337,11 @@ namespace AryMemory
             }
             return results;
         }
+
+        public void Test()
+        {
+
+        }
         #endregion
         #region Pinvokes
         private const uint PROCESS_ALL_ACCESS = 0x1F0FFF;
