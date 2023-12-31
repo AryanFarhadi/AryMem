@@ -158,7 +158,7 @@ namespace AryMemory
             return result;
         }
         /// <summary>
-        /// Write 00 bytes to process memory
+        /// Write 00=null byte to process memory
         /// </summary>
         /// <param name="address"></param>
         /// <param name="sizeOfBytes"></param>
@@ -267,7 +267,7 @@ namespace AryMemory
         /// </summary>
         /// <param name="address"></param>
         /// <param name="length"></param>
-        /// <returns>Was replace instruction successful</returns>
+        /// <returns></returns>
         public bool Nop(ulong address, int length)
         {
             byte[] array = new byte[length];
@@ -303,7 +303,7 @@ namespace AryMemory
         /// <summary>
         /// Search for addresses by signature in target process memory
         /// </summary>
-        /// <param name="signature">string of target signature : "?? 13 A7 FF ??"</param>
+        /// <param name="signature">string of target signature : "?? 12 A5 FF ??"</param>
         /// <returns>List of found addresses</returns>
         public List<ulong> ScanAoB(string signature)
         {
