@@ -19,6 +19,7 @@
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<DocumentationFile>A:\Code Projecs\C#\AryMem\AryMem\bin\Release\net6.0-windows\AryMem.xml</DocumentationFile>
+	<Copyright>Copyright (c) Aryan Farhadi 2024.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
