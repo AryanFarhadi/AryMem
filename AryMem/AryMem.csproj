@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://github.com/AryanFarhadi/AryMem</PackageProjectUrl>
 	<PackageId>AryMem</PackageId>
 	<Authors>Aryan Farhadi</Authors>
-	<Description>A memory manipulation library to read and write memory in the simplest way</Description>
+	<Description>A memory manipulation library to read and write memory in the simplest way + advance tool</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>

@@ -425,10 +425,24 @@ namespace AryMem
 
             mouse_event((int)value, position.X, position.Y, 0, 0);
         }
+
+        /// <summary>
+        /// Inject a dll into process
+        /// </summary>
+        /// <param name="dllPath">Path of dll file</param>
+        public void InjectDLL(string dllPath)
+        {
+            IntPtr loadLibraryAddr = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            IntPtr allocMemAddress = VirtualAllocEx(mHandle, IntPtr.Zero, (dllPath.Length + 1) * Marshal.SizeOf(typeof(char)), (int)(MEM_COMMIT | MEM_RESERVE), (int)PAGE_READWRITE);
+            int bytesWritten = 0;
+            WriteProcessMemory(mHandle, (ulong)allocMemAddress, Encoding.Default.GetBytes(dllPath), (dllPath.Length + 1) * Marshal.SizeOf(typeof(char)), ref bytesWritten);
+            CreateRemoteThread(mHandle, IntPtr.Zero, 0, loadLibraryAddr, allocMemAddress, 0, IntPtr.Zero);
+        }
         #endregion
         #region Pinvokes
         private const uint PROCESS_ALL_ACCESS = 0x1F0FFF;
         private const uint MEM_COMMIT = 0x1000;
+        private const uint MEM_RESERVE = 0x2000;
         private const uint PAGE_READONLY = 0x02;
         private const uint PAGE_READWRITE = 0x04;
 
@@ -735,6 +749,18 @@ namespace AryMem
             RightDown = 0x00000008,
             RightUp = 0x00000010
         }
+        [DllImport("kernel32.dll")]
+        static extern IntPtr OpenProcess(int dwDesiredAccess, int bInheritHandle, int dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, int dwSize, int flAllocationType, int flProtect);
+        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true)]
+        static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("kernel32.dll")]
+        static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, int dwFlags);
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetCursorPos(int x, int y);
