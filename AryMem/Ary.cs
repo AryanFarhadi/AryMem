@@ -28,7 +28,7 @@ namespace AryMem
         #endregion
         #region Methods
         /// <summary>
-        /// Read diffrents type of value except byte[], string to process memory
+        /// Read diffrents type of value except byte[], string from process memory
         /// <para>Use : ReadMemory(ulong address, int sizeOfBytes) for byte[]</para>
         /// <para>Use : ReadMemory(ulong address, int lengthOfString, StringType stringType) for string</para>
         /// </summary>
@@ -84,7 +84,7 @@ namespace AryMem
         /// Read string from proces memory
         /// </summary>
         /// <param name="address"></param>
-        /// <param name="sizeOfString"></param>
+        /// <param name="lengthOfString"></param>
         /// <param name="stringType"></param>
         /// <returns>Value</returns>
         /// <exception cref="Exception"></exception>
@@ -103,7 +103,7 @@ namespace AryMem
                             return Encoding.UTF32.GetString(buffer);
                         case StringType.ASCII:
                             return Encoding.ASCII.GetString(buffer);
-                        case StringType.Uunicode:
+                        case StringType.Unicode:
                             return Encoding.Unicode.GetString(buffer);
                         default:
                             return Encoding.UTF8.GetString(buffer);
@@ -200,7 +200,7 @@ namespace AryMem
                 case StringType.ASCII:
                     buffer = Encoding.ASCII.GetBytes(value);
                     break;
-                case StringType.Uunicode:
+                case StringType.Unicode:
                     buffer = Encoding.Unicode.GetBytes(value);
                     break;
                 default:
@@ -247,7 +247,6 @@ namespace AryMem
             }
             return pointer;
         }
-
 
         /// <summary>
         /// Calculate pointer to an address by offset
@@ -457,7 +456,7 @@ namespace AryMem
             UTF8,
             UTF32,
             ASCII,
-            Uunicode
+            Unicode
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct MEMORY_BASIC_INFORMATION
