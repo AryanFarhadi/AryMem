@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-	<VersionPrefix>1.0.3</VersionPrefix>
+	<VersionPrefix>1.0.4</VersionPrefix>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/AryanFarhadi/AryMem</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
