@@ -354,7 +354,7 @@ namespace AryMem
         public ulong AllocateMemory(int size)
         {
             EnsureNotDisposed();
-            IntPtr addr = NativeMethods.VirtualAllocEx(_processHandle, IntPtr.Zero, size, NativeMethods.MEM_COMMIT | NativeMethods.MEM_RESERVE, NativeMethods.PAGE_EXECUTE_READWRITE);
+            IntPtr addr = NativeMethods.VirtualAllocEx(_processHandle, IntPtr.Zero, size, (int)NativeMethods.MEM_COMMIT | (int)NativeMethods.MEM_RESERVE, NativeMethods.PAGE_EXECUTE_READWRITE);
             if (addr == IntPtr.Zero)
                 ThrowError("Failed to allocate memory.");
             return (ulong)addr;
@@ -490,7 +490,7 @@ namespace AryMem
                 ThrowError("Failed to retrieve LoadLibraryA address.");
 
             int size = (dllPath.Length + 1) * Marshal.SizeOf(typeof(char));
-            IntPtr allocMemAddress = NativeMethods.VirtualAllocEx(_processHandle, IntPtr.Zero, size, NativeMethods.MEM_COMMIT | NativeMethods.MEM_RESERVE, NativeMethods.PAGE_READWRITE);
+            IntPtr allocMemAddress = NativeMethods.VirtualAllocEx(_processHandle, IntPtr.Zero, size, (int)NativeMethods.MEM_COMMIT | (int)NativeMethods.MEM_RESERVE, (int)NativeMethods.PAGE_READWRITE);
             if (allocMemAddress == IntPtr.Zero)
                 ThrowError("Failed to allocate memory for DLL path.");
 
